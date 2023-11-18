@@ -36,6 +36,8 @@ download_release "unlockfeed-app" "ufapp"
 download_release "unlockfeed-web" "ufweb"
 
 mv $TMP_DIR/ufweb/public/build $TMP_DIR/ufapp/wwwroot/public/
+cp $TMP_DIR/ufapp/version.txt $TMP_DIR/ufapp/App_Data/app-version.txt
+cp $TMP_DIR/ufweb/version.txt $TMP_DIR/ufapp/App_Data/ui-version.txt
 sudo rm -rf /srv/unlockfeed/app
 sudo mv $TMP_DIR/ufapp /srv/unlockfeed/app
 sudo service supervisor restart
