@@ -25,8 +25,8 @@ function download_release() {
 
     echo "$filename" is downloaded and will be extracted
 
-    version=${filename#ufapp-} # Remove prefix up to and including 'ufapp-'
-    version=${version%.tar.gz} # Remove '.tar.gz' suffix
+    version=${filename#swpapp-} # Remove prefix up to and including 'swpapp-'
+    version=${version%.tar.gz}  # Remove '.tar.gz' suffix
 
     $TAR_CMD -xzf "$TMP_DIR/$filename" -C "$TMP_DIR" --one-top-level="$CODENAME"
 
@@ -41,5 +41,5 @@ mv $TMP_DIR/swpweb/public/build $TMP_DIR/swpapp/wwwroot/public/
 cp $TMP_DIR/swpapp/version.txt $TMP_DIR/swpapp/App_Data/app-version.txt
 cp $TMP_DIR/swpweb/version.txt $TMP_DIR/swpapp/App_Data/ui-version.txt
 sudo rm -rf /srv/swipetor/app
-sudo mv $TMP_DIR/ufapp /srv/swipetor/app
+sudo mv $TMP_DIR/swpapp /srv/swipetor/app
 sudo service supervisor restart
