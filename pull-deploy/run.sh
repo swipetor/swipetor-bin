@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BEARER=$(cat ~/.swipetor/repos_read_secret)
+FIREBASE_ADMIN=$(cat ~/.swipetor/firebase-admin.json)
 TMP_DIR="/tmp/swipetor-deploy"
 
 rm -rf "$TMP_DIR"
@@ -35,6 +36,7 @@ function download_release() {
 download_release "unlockfeed-app" "swpapp"
 download_release "unlockfeed-web" "swpweb"
 
+echo "$FIREBASE_ADMIN" >"$TMP_DIR/swpapp/App_Data/firebase-admin.json"
 mv $TMP_DIR/swpweb/public/build $TMP_DIR/swpapp/wwwroot/public/
 cp $TMP_DIR/swpapp/version.txt $TMP_DIR/swpapp/App_Data/app-version.txt
 cp $TMP_DIR/swpweb/version.txt $TMP_DIR/swpapp/App_Data/ui-version.txt
