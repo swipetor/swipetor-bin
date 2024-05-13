@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BEARER=$(cat ~/.unlockfeed/repos_read_secret)
-TMP_DIR="/tmp/unlockfeed-deploy"
+BEARER=$(cat ~/.swipetor/repos_read_secret)
+TMP_DIR="/tmp/swipetor-deploy"
 
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
@@ -32,12 +32,12 @@ function download_release() {
     echo "$version" >"$TMP_DIR/$CODENAME/version.txt"
 }
 
-download_release "unlockfeed-app" "ufapp"
-download_release "unlockfeed-web" "ufweb"
+download_release "unlockfeed-app" "swpapp"
+download_release "unlockfeed-web" "swpweb"
 
-mv $TMP_DIR/ufweb/public/build $TMP_DIR/ufapp/wwwroot/public/
-cp $TMP_DIR/ufapp/version.txt $TMP_DIR/ufapp/App_Data/app-version.txt
-cp $TMP_DIR/ufweb/version.txt $TMP_DIR/ufapp/App_Data/ui-version.txt
-sudo rm -rf /srv/unlockfeed/app
-sudo mv $TMP_DIR/ufapp /srv/unlockfeed/app
+mv $TMP_DIR/swpweb/public/build $TMP_DIR/swpapp/wwwroot/public/
+cp $TMP_DIR/swpapp/version.txt $TMP_DIR/swpapp/App_Data/app-version.txt
+cp $TMP_DIR/swpweb/version.txt $TMP_DIR/swpapp/App_Data/ui-version.txt
+sudo rm -rf /srv/swipetor/app
+sudo mv $TMP_DIR/ufapp /srv/swipetor/app
 sudo service supervisor restart
