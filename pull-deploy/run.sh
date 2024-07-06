@@ -33,8 +33,8 @@ function download_release() {
     echo "$version" >"$TMP_DIR/$CODENAME/version.txt"
 }
 
-download_release "unlockfeed-app" "swpapp"
-download_release "unlockfeed-web" "swpweb"
+download_release "swpapp" "swpapp"
+download_release "swpweb" "swpweb"
 
 echo "$FIREBASE_ADMIN" >"$TMP_DIR/swpapp/App_Data/firebase-admin.json"
 mv $TMP_DIR/swpweb/public/build $TMP_DIR/swpapp/wwwroot/public/
