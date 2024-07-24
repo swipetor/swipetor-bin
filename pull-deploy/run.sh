@@ -40,6 +40,5 @@ echo "$FIREBASE_ADMIN" >"$TMP_DIR/swpapp/App_Data/firebase-admin.json"
 mv $TMP_DIR/swpweb/public/build $TMP_DIR/swpapp/wwwroot/public/
 cp $TMP_DIR/swpapp/version.txt $TMP_DIR/swpapp/App_Data/app-version.txt
 cp $TMP_DIR/swpweb/version.txt $TMP_DIR/swpapp/App_Data/ui-version.txt
-sudo rm -rf /srv/swipetor/app
-sudo mv $TMP_DIR/swpapp /srv/swipetor/app
+sudo rsync -av --delete $TMP_DIR/swpapp/ /srv/swipetor/app/
 sudo service supervisor restart
