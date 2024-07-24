@@ -41,4 +41,5 @@ mv $TMP_DIR/swpweb/public/build $TMP_DIR/swpapp/wwwroot/public/
 cp $TMP_DIR/swpapp/version.txt $TMP_DIR/swpapp/App_Data/app-version.txt
 cp $TMP_DIR/swpweb/version.txt $TMP_DIR/swpapp/App_Data/ui-version.txt
 sudo rsync -av --delete $TMP_DIR/swpapp/ /srv/swipetor/app/
+sudo rm -rf $TMP_DIR/swpapp
 sudo service supervisor restart
