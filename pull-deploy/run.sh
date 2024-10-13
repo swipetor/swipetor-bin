@@ -25,21 +25,21 @@ function download_release() {
 
     echo "$filename" is downloaded and will be extracted
 
-    version=${filename#swpapp-} # Remove prefix up to and including 'swpapp-'
-    version=${version%.tar.gz}  # Remove '.tar.gz' suffix
+    version=${filename#swpserver-} # Remove prefix up to and including 'swpserver-'
+    version=${version%.tar.gz}     # Remove '.tar.gz' suffix
 
     $TAR_CMD -xzf "$TMP_DIR/$filename" -C "$TMP_DIR" --one-top-level="$CODENAME"
 
     echo "$version" >"$TMP_DIR/$CODENAME/version.txt"
 }
 
-download_release "swpapp" "swpapp"
-download_release "swpweb" "swpweb"
+download_release "swipetor-server" "swpserver"
+download_release "swipetor-ui" "swpui"
 
-echo "$FIREBASE_ADMIN" >"$TMP_DIR/swpapp/App_Data/firebase-admin.json"
-mv $TMP_DIR/swpweb/public/build $TMP_DIR/swpapp/wwwroot/public/
-cp $TMP_DIR/swpapp/version.txt $TMP_DIR/swpapp/App_Data/app-version.txt
-cp $TMP_DIR/swpweb/version.txt $TMP_DIR/swpapp/App_Data/ui-version.txt
-sudo rsync -r --delete --exclude='/wwwroot/public/sitemaps/' --no-perms $TMP_DIR/swpapp/ /srv/swipetor/app/
-sudo rm -rf $TMP_DIR/swpapp
+echo "$FIREBASE_ADMIN" >"$TMP_DIR/swpserver/App_Data/firebase-admin.json"
+mv $TMP_DIR/swpui/public/build $TMP_DIR/swpserver/wwwroot/public/
+cp $TMP_DIR/swpserver/version.txt $TMP_DIR/swpserver/App_Data/app-version.txt
+cp $TMP_DIR/swpui/version.txt $TMP_DIR/swpserver/App_Data/ui-version.txt
+sudo rsync -r --delete --exclude='/wwwroot/public/sitemaps/' --no-perms $TMP_DIR/swpserver/ /srv/swipetor/app/
+sudo rm -rf $TMP_DIR/swpserver
 sudo service supervisor restart
