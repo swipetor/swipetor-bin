@@ -1,5 +1,6 @@
 #!/bin/bash
 
+BEARER=$(cat ~/.swipetor/repos_read_secret)
 FIREBASE_ADMIN=$(cat ~/.swipetor/firebase-admin.json)
 TMP_DIR="/tmp/swipetor-deploy"
 DEPLOY_DIR="/srv/swipetor/app"
@@ -19,7 +20,7 @@ function download_release() {
     GITHUB_REPO="swipetor/${1}"
     CODENAME=$2
 
-    GH_TOKEN=gh release download -R "$GITHUB_REPO" --pattern="*" --dir="$TMP_DIR"
+    GH_TOKEN=$BEARER gh release download -R "$GITHUB_REPO" --pattern="*" --dir="$TMP_DIR"
     filename=$(find "$TMP_DIR" -name "${CODENAME}-*.tar.gz" -print -quit)
     filename=$(basename "$filename")
 
