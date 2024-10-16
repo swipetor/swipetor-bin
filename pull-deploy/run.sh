@@ -1,8 +1,8 @@
 #!/bin/bash
 
-BEARER=$(cat ~/.swipetor/repos_read_secret)
 FIREBASE_ADMIN=$(cat ~/.swipetor/firebase-admin.json)
 TMP_DIR="/tmp/swipetor-deploy"
+DEPLOY_DIR="/srv/swipetor/app"
 
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
@@ -16,10 +16,10 @@ fi
 # Arg 1: Full directory path
 function download_release() {
     # Set the GitHub repository (format: user/repo)
-    GITHUB_REPO="atas/${1}"
+    GITHUB_REPO="swipetor/${1}"
     CODENAME=$2
 
-    GH_TOKEN=$BEARER gh release download -R "$GITHUB_REPO" --pattern="*" --dir="$TMP_DIR"
+    GH_TOKEN=gh release download -R "$GITHUB_REPO" --pattern="*" --dir="$TMP_DIR"
     filename=$(find "$TMP_DIR" -name "${CODENAME}-*.tar.gz" -print -quit)
     filename=$(basename "$filename")
 
@@ -40,6 +40,6 @@ echo "$FIREBASE_ADMIN" >"$TMP_DIR/swpserver/App_Data/firebase-admin.json"
 mv $TMP_DIR/swpui/public/build $TMP_DIR/swpserver/wwwroot/public/
 cp $TMP_DIR/swpserver/version.txt $TMP_DIR/swpserver/App_Data/app-version.txt
 cp $TMP_DIR/swpui/version.txt $TMP_DIR/swpserver/App_Data/ui-version.txt
-sudo rsync -r --delete --exclude='/wwwroot/public/sitemaps/' --no-perms $TMP_DIR/swpserver/ /srv/swipetor/app/
+sudo rsync -r --delete --exclude='/wwwroot/public/sitemaps/' --no-perms $TMP_DIR/swpserver/ $DEPLOY_DIR
 sudo rm -rf $TMP_DIR/swpserver
 sudo service supervisor restart
